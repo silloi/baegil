@@ -2,6 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <v-img
+        min-height="150"
         src="anniversary.jpg"
       />
       <h1>記念日をカレンダーで計算</h1>
@@ -42,7 +43,7 @@
       </v-sheet>
       <v-card>
         <v-card-title class="headline">
-          記念日
+          {{ formatDateShort(focus) }}はじまりの記念日
         </v-card-title>
         <v-list>
           <v-list-item v-for="event in events" :key="event.name">
@@ -70,7 +71,7 @@ const numbersMemorial = [
 
 export default {
   data: () => ({
-    focus: '',
+    focus: new Date(),
     events: [],
     type: 'month',
     typeToLabel: {
@@ -93,6 +94,12 @@ export default {
 
       return `${year}年${month}月${day}日（${weekday}）`
     },
+    formatDateShort (date) {
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+
+      return `${month}月${day}日`
+    },
     setDay (date) {
       this.focus = date
       const calculateDayAfter = day => new Date(Date.parse(date) + 1000 * 60 * 60 * 24 * (day - 1))
@@ -108,8 +115,7 @@ export default {
 
       events.push({
         name: '1日目',
-        start: date,
-        color: 'red'
+        start: date
       })
 
       datesMemorial.map((date) => {
@@ -132,7 +138,7 @@ export default {
 
 <style scoped>
 h1 {
-  font-size: 2rem !important;
+  font-size: 1.8rem !important;
   font-weight: 400;
   line-height: 6rem;
   letter-spacing: normal !important;
