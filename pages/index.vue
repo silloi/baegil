@@ -80,11 +80,7 @@ export default {
     }
   }),
   mounted () {
-    if (localStorage.date) {
-      this.setDay(new Date(localStorage.date * 1000))
-    } else {
-      this.setDay(new Date())
-    }
+    this.setDay(new Date())
   },
   methods: {
     formatDate (date) {
@@ -99,7 +95,6 @@ export default {
     },
     setDay (date) {
       this.focus = date
-      localStorage.date = Date.parse(date)
       const calculateDayAfter = day => new Date(Date.parse(date) + 1000 * 60 * 60 * 24 * (day - 1))
 
       const datesMemorial = numbersMemorial.map((number) => {
