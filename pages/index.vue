@@ -4,9 +4,7 @@
       <v-img
         src="anniversary.jpg"
       />
-      <v-card-title>
-        記念日をカレンダーで計算
-      </v-card-title>
+      <h1>記念日をカレンダーで計算</h1>
       <v-sheet
         tile
         class="d-flex"
@@ -47,23 +45,12 @@
           記念日
         </v-card-title>
         <v-list>
-          <v-list-item>
+          <v-list-item v-for="event in events" :key="event.name">
             <v-list-item-content two-line>
-              <v-list-item-title>2020年10月10日</v-list-item-title>
-              <v-list-item-subtitle>10日</v-list-item-subtitle>
+              <v-list-item-title>{{ formatDate(event.start) }}</v-list-item-title>
+              <v-list-item-subtitle>{{ event.name }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>20日</v-list-item>
-          <v-list-item>1ヶ月</v-list-item>
-          <v-list-item>50日</v-list-item>
-          <v-list-item>2ヶ月</v-list-item>
-          <v-list-item>3ヶ月</v-list-item>
-          <v-list-item>100日</v-list-item>
-          <v-list-item>6ヶ月</v-list-item>
-          <v-list-item>200日</v-list-item>
-          <v-list-item>300日</v-list-item>
-          <v-list-item>500日</v-list-item>
-          <v-list-item>1000日</v-list-item>
         </v-list>
         <v-card-actions>
           <v-spacer />
@@ -82,6 +69,15 @@
 
 <script>
 
+const numbersMemorial = [
+  10,
+  20,
+  50,
+  100,
+  200,
+  500
+]
+
 export default {
   data: () => ({
     focus: new Date(),
@@ -98,17 +94,18 @@ export default {
     this.setDay(new Date())
   },
   methods: {
-    setDay (date) {
-      const calculateDayAfter = day => new Date(Date.parse(date) + 1000 * 60 * 60 * 24 * day)
+    formatDate (date) {
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土']
 
-      const numbersMemorial = [
-        10,
-        20,
-        50,
-        100,
-        200,
-        500
-      ]
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const weekday = weekdays[date.getDay()]
+      const day = date.getDate()
+
+      return `${year}年${month}月${day}日（${weekday}）`
+    },
+    setDay (date) {
+      const calculateDayAfter = day => new Date(Date.parse(date) + 1000 * 60 * 60 * 24 * (day - 1))
 
       const datesMemorial = numbersMemorial.map((number) => {
         return {
@@ -122,8 +119,7 @@ export default {
       datesMemorial.map((date) => {
         events.push({
           name: `${date.number}日目`,
-          start: date.date,
-          end: date.date
+          start: date.date
         })
       })
 
@@ -137,3 +133,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h1 {
+  font-size: 2rem !important;
+  font-weight: 400;
+  line-height: 6rem;
+  letter-spacing: normal !important;
+  font-family: "Roboto", sans-serif !important;
+  text-align: center;
+}
+</style>
