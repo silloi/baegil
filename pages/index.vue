@@ -32,7 +32,7 @@
       <v-sheet height="420">
         <v-calendar
           ref="calendar"
-          v-model="value"
+          v-model="focus"
           locale="ja-jp"
           :day-format="timestamp => new Date(timestamp.date).getDate()"
           :month-format="timestamp => (new Date(timestamp.date).getMonth() + 1) + ' /'"
@@ -52,16 +52,6 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
@@ -80,8 +70,7 @@ const numbersMemorial = [
 
 export default {
   data: () => ({
-    focus: new Date(),
-    value: '',
+    focus: '',
     events: [],
     type: 'month',
     typeToLabel: {
@@ -91,7 +80,11 @@ export default {
     }
   }),
   mounted () {
-    this.setDay(new Date())
+    if (localStorage.date) {
+      this.setDay(new Date(localStorage.date * 1000))
+    } else {
+      this.setDay(new Date())
+    }
   },
   methods: {
     formatDate (date) {
@@ -105,6 +98,8 @@ export default {
       return `${year}年${month}月${day}日（${weekday}）`
     },
     setDay (date) {
+      this.focus = date
+      localStorage.date = Date.parse(date)
       const calculateDayAfter = day => new Date(Date.parse(date) + 1000 * 60 * 60 * 24 * (day - 1))
 
       const datesMemorial = numbersMemorial.map((number) => {
@@ -115,6 +110,12 @@ export default {
       })
 
       const events = []
+
+      events.push({
+        name: '1日目',
+        start: date,
+        color: 'red'
+      })
 
       datesMemorial.map((date) => {
         events.push({
