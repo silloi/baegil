@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - 記念日カレンダー',
+    titleTemplate: '%s - 100日記念日.com',
     title: '記念日カレンダー',
     meta: [
       { charset: 'utf-8' },
