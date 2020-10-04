@@ -3,7 +3,7 @@
     <v-col cols="12" sm="8" md="6">
       <v-img
         min-height="150"
-        src="banner.png"
+        src="banner.jpg"
       />
       <h1>記念日をカレンダーで計算</h1>
       <v-sheet
