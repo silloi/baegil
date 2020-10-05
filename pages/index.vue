@@ -3,9 +3,12 @@
     <v-col cols="12" sm="8" md="6">
       <v-img
         min-height="150"
+        alt="100日記念日.com"
         src="banner.jpg"
       />
-      <h1>記念日をカレンダーで計算</h1>
+      <h1 class="headline">
+        記念日をカレンダーで計算
+      </h1>
       <v-sheet
         tile
         class="d-flex"
@@ -42,7 +45,7 @@
         />
       </v-sheet>
       <v-card>
-        <v-card-title class="headline">
+        <v-card-title>
           {{ formatDateShort(focus) }}はじまりの記念日
         </v-card-title>
         <v-list>
@@ -137,7 +140,7 @@ export default {
 </script>
 
 <style scoped>
-h1 {
+.headline {
   font-size: 1.8rem !important;
   font-weight: 400;
   line-height: 6rem;
